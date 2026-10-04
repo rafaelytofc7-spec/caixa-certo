@@ -1,0 +1,49 @@
+name: Publicar no GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Instalar dependências
+        run: npm ci
+      - name: Conferir configuração pública do Supabase
+        # web/.env.supabase tem só a URL e a chave PÚBLICA (anon) — nunca a service_role
+        run: |
+          test -f web/.env.supabase || { echo "Falta web/.env.supabase (copie de web/.env.supabase.example)"; exit 1; }
+          node -e "const k=(require('fs').readFileSync('web/.env.supabase','utf8').match(/^VITE_SUPABASE_KEY=(.*)$/m)||[])[1]||'';if(k.startsWith('sb_secret_'))throw new Error('chave secreta!');if(k.split('.').length===3){const r=JSON.parse(Buffer.from(k.split('.')[1],'base64url')).role;if(r!=='anon')throw new Error('a chave precisa ser anon, veio: '+r)}console.log('chave pública ok')"
+      - name: Testes de unidade
+        run: npm test
+      - name: Compilar (app das lojas + painel admin.html)
+        run: npm run build:pages
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web/dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

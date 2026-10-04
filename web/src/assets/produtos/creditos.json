@@ -1,0 +1,794 @@
+[
+  {
+    "product": "Tomate italiano",
+    "slug": "tomate-italiano",
+    "title": "Tomatoes (Plum Roma) - Arlingtin, MA",
+    "author": "Daderot",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Tomatoes_(Plum_Roma)_-_Arlingtin,_MA.jpg"
+  },
+  {
+    "product": "Cebola",
+    "slug": "cebola",
+    "title": "Yellow onions vegetables",
+    "author": "Jon Sullivan",
+    "license": "Public domain",
+    "license_url": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Yellow_onions_vegetables.jpg"
+  },
+  {
+    "product": "Batata",
+    "slug": "batata",
+    "title": "Unwashed bowl of potatoes",
+    "author": "Nightgane",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Unwashed_bowl_of_potatoes.jpg"
+  },
+  {
+    "product": "Cenoura",
+    "slug": "cenoura",
+    "title": "Carrots at Ljubljana Central Market",
+    "author": "domdomegg",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Carrots_at_Ljubljana_Central_Market.JPG"
+  },
+  {
+    "product": "Abobrinha",
+    "slug": "abobrinha",
+    "title": "Zucchini",
+    "author": "cbb4104",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "source": "https://www.flickr.com/photos/68552389@N00/5717094450"
+  },
+  {
+    "product": "Pepino",
+    "slug": "pepino",
+    "title": "Mediterranean cucumber",
+    "author": "user:WLU",
+    "license": "Public domain",
+    "license_url": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Mediterranean_cucumber.JPG"
+  },
+  {
+    "product": "Chuchu",
+    "slug": "chuchu",
+    "title": "Chayote Tee",
+    "author": "စာကလေး",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Chayote_Tee.jpg"
+  },
+  {
+    "product": "Batata doce",
+    "slug": "batata-doce",
+    "title": "Batata-doce, ou jetica (do tupi îetyka) 07",
+    "author": "Bageense",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Batata-doce,_ou_jetica_(do_tupi_%C3%AEetyka)_07.jpg"
+  },
+  {
+    "product": "Beterraba",
+    "slug": "beterraba",
+    "title": "CDC beets",
+    "author": "CDC's 5 a Day",
+    "license": "Public domain",
+    "license_url": "",
+    "source": "https://commons.wikimedia.org/wiki/File:CDC_beets.jpg"
+  },
+  {
+    "product": "Abóbora cabotiá",
+    "slug": "abobora-cabotia",
+    "title": "Cucurbita kabocha o kabutiá o tipo Tetsukabuto 2 zapallos cáscara",
+    "author": "RoRo",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Cucurbita_kabocha_o_kabuti%C3%A1_o_tipo_Tetsukabuto_2_zapallos_c%C3%A1scara.jpg"
+  },
+  {
+    "product": "Alho",
+    "slug": "alho",
+    "title": "Opened garlic bulb with garlic clove",
+    "author": "Dubravko Sorić SoraZG on Flickr",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Opened_garlic_bulb_with_garlic_clove.jpg"
+  },
+  {
+    "product": "Repolho",
+    "slug": "repolho",
+    "title": "Cabbage in a stack",
+    "author": "Jeffery Martin",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Cabbage_in_a_stack.jpg"
+  },
+  {
+    "product": "Brócolis",
+    "slug": "brocolis",
+    "title": "Head of Broccoil",
+    "author": "Alabama Extension",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Head_of_Broccoil.jpg"
+  },
+  {
+    "product": "Banana prata",
+    "slug": "banana-prata",
+    "title": "Banana Prata",
+    "author": "Gouvêa Martins",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Banana_Prata.jpg"
+  },
+  {
+    "product": "Banana nanica",
+    "slug": "banana-nanica",
+    "title": "Bananas - Cavendish Bananas (51013511991)",
+    "author": "ajay_suresh",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "source": "https://commons.wikimedia.org/w/index.php?curid=101300769"
+  },
+  {
+    "product": "Mamão formosa",
+    "slug": "mamao-formosa",
+    "title": "Papaya",
+    "author": "Vegan Feast Catering",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "source": "https://www.flickr.com/photos/25128194@N02/4467442529"
+  },
+  {
+    "product": "Abacaxi",
+    "slug": "abacaxi",
+    "title": "Pineapple fruit 2",
+    "author": "Wilfredor",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Pineapple_fruit_2.jpg"
+  },
+  {
+    "product": "Melancia",
+    "slug": "melancia",
+    "title": "Watermelon",
+    "author": "gianouts",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "source": "https://www.flickr.com/photos/78624494@N00/5330763573"
+  },
+  {
+    "product": "Pera",
+    "slug": "pera",
+    "title": "Rocha Pear 2017 AA",
+    "author": "Fructibus",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Rocha_Pear_2017_AA.jpg"
+  },
+  {
+    "product": "Cheiro verde",
+    "slug": "cheiro-verde",
+    "title": "Fresh Parsley",
+    "author": "cookbookman17",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "source": "https://www.flickr.com/photos/58545726@N02/5620131626"
+  },
+  {
+    "product": "Morango",
+    "slug": "morango",
+    "title": "20120106-OC-AMW-0539 (7414202672)",
+    "author": "U.S. Department of Agriculture",
+    "license": "Public domain",
+    "license_url": "",
+    "source": "https://commons.wikimedia.org/wiki/File:20120106-OC-AMW-0539_(7414202672).jpg"
+  },
+  {
+    "product": "Abacate",
+    "slug": "abacate",
+    "title": "Persea americana from Canadian supermarket",
+    "author": "Wilfredor",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Persea_americana_from_Canadian_supermarket.jpg"
+  },
+  {
+    "product": "Abóbora da roça",
+    "slug": "abobora-da-roca",
+    "title": "Seminole pumpkin fruit",
+    "author": "A Thinking Stomach",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Seminole_pumpkin_fruit.jpg"
+  },
+  {
+    "product": "Abobrinha verde",
+    "slug": "abobrinha-verde",
+    "title": "Zucchini - Massachusetts",
+    "author": "Daderot",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Zucchini_-_Massachusetts.jpg"
+  },
+  {
+    "product": "Alface",
+    "slug": "alface",
+    "title": "Lettuce Mini Heads (7331119710)",
+    "author": "Dwight Sipler from Stow, MA, USA",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Lettuce_Mini_Heads_(7331119710).jpg"
+  },
+  {
+    "product": "Banana maçã",
+    "slug": "banana-maca",
+    "title": "Ripe latundan bananas",
+    "author": "whologwhy",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ripe_latundan_bananas.jpg"
+  },
+  {
+    "product": "Banana marmelo",
+    "slug": "banana-marmelo",
+    "title": "Cooking banana in a finnish supermarket",
+    "author": "Apinanaivot",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Cooking_banana_in_a_finnish_supermarket.jpg"
+  },
+  {
+    "product": "Bandeja de milho",
+    "slug": "bandeja-de-milho",
+    "title": "Corn on the cob (sweet corn)",
+    "author": "Nutrition, Food Safety & Health",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Corn_on_the_cob_(sweet_corn).jpg"
+  },
+  {
+    "product": "Cará",
+    "slug": "cara",
+    "title": "Tubers of Yam for sale",
+    "author": "Iwai-Dialax",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Tubers_of_Yam_for_sale.jpg"
+  },
+  {
+    "product": "Cebola grande",
+    "slug": "cebola-grande",
+    "title": "Yellow Onions",
+    "author": "La Grande Farmers' Market",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "source": "https://www.flickr.com/photos/37884983@N03/3536797520"
+  },
+  {
+    "product": "Cebola roxa",
+    "slug": "cebola-roxa",
+    "title": "Red Onions (2724039538)",
+    "author": "Bob",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Red_Onions_(2724039538).jpg"
+  },
+  {
+    "product": "Coco seco",
+    "slug": "coco-seco",
+    "title": "Oval shaped brown coconut (4268223207)",
+    "author": "Old Photo Profile",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Oval_shaped_brown_coconut_(4268223207).jpg"
+  },
+  {
+    "product": "Couve",
+    "slug": "couve",
+    "title": "Collard-Greens-Bundle",
+    "author": "Evan-Amos",
+    "license": "Public domain",
+    "license_url": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Collard-Greens-Bundle.jpg"
+  },
+  {
+    "product": "Doce de banana",
+    "slug": "doce-de-banana",
+    "title": "2024-04-02 Bananada, 01",
+    "author": "Minerva97",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:2024-04-02_Bananada,_01.jpg"
+  },
+  {
+    "product": "Hortelã",
+    "slug": "hortela",
+    "title": "Mint-leaves-2007",
+    "author": "Kham Tran - www.khamtran.com",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mint-leaves-2007.jpg"
+  },
+  {
+    "product": "Inhame",
+    "slug": "inhame",
+    "title": "Taro Root, Eddoe or Colocasia Esculenta",
+    "author": "စာကလေး",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Taro_Root,_Eddoe_or_Colocasia_Esculenta.jpg"
+  },
+  {
+    "product": "Jiló",
+    "slug": "jilo",
+    "title": "Starr-100217-1973-Solanum gilo-fruit-Olinda-Maui (24378337254)",
+    "author": "Forest and Kim Starr",
+    "license": "CC BY 3.0 us",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/us/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Starr-100217-1973-Solanum_gilo-fruit-Olinda-Maui_(24378337254).jpg"
+  },
+  {
+    "product": "Laranja",
+    "slug": "laranja",
+    "title": "Ambersweet oranges",
+    "author": "USDA Agricultural Research Service (governo dos EUA)",
+    "license": "Public domain",
+    "license_url": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Ambersweet_oranges.jpg"
+  },
+  {
+    "product": "Leite pet 2 L",
+    "slug": "leite-pet-2-l",
+    "title": "Two milk gallons in refrigerator door.agr",
+    "author": "ArnoldReinhold",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Two_milk_gallons_in_refrigerator_door.agr.jpg"
+  },
+  {
+    "product": "Limão",
+    "slug": "limao",
+    "title": "Limes with halves",
+    "author": "Jiafei Slay Queen",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Limes_with_halves.jpg"
+  },
+  {
+    "product": "Maçã",
+    "slug": "maca",
+    "title": "Red Apple",
+    "author": "Abhijit Tembhekar from Mumbai, India",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Red_Apple.jpg"
+  },
+  {
+    "product": "Mamão Havaí",
+    "slug": "mamao-havai",
+    "title": "Ripe Strawberry Papaya (4463308849)",
+    "author": "Vegan Feast Catering",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ripe_Strawberry_Papaya_(4463308849).jpg"
+  },
+  {
+    "product": "Manga",
+    "slug": "manga",
+    "title": "Mangoes!",
+    "author": "joyosity",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "source": "https://www.flickr.com/photos/33993074@N00/3474057847"
+  },
+  {
+    "product": "Maracujá",
+    "slug": "maracuja",
+    "title": "Maracujá (do tupi murukuîá), Passiflora edulis f. flavicarpa 03",
+    "author": "Bageense",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Maracuj%C3%A1_(do_tupi_muruku%C3%AE%C3%A1),_Passiflora_edulis_f._flavicarpa_03.jpg"
+  },
+  {
+    "product": "Melão",
+    "slug": "melao",
+    "title": "Golden honeydew melon",
+    "author": "Fumikas Sagisavas",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Golden_honeydew_melon.jpg"
+  },
+  {
+    "product": "Mostarda",
+    "slug": "mostarda",
+    "title": "Starr-150403-1408-Brassica juncea-leaves-Southeast Eastern Island-Midway Atoll (24982012140)",
+    "author": "Forest and Kim Starr",
+    "license": "CC BY 3.0 us",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/us/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Starr-150403-1408-Brassica_juncea-leaves-Southeast_Eastern_Island-Midway_Atoll_(24982012140).jpg"
+  },
+  {
+    "product": "Ovo branco (cartela)",
+    "slug": "ovo-branco-cartela",
+    "title": "Usda eggs",
+    "author": "Stangoldsmith",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Usda_eggs.JPG"
+  },
+  {
+    "product": "Ovo caipira (cartela)",
+    "slug": "ovo-caipira-cartela",
+    "title": "Fresh brown eggs arranged in a carton on wooden kitchen counter ready for cooking or baking",
+    "author": "Shixart1985",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Fresh_brown_eggs_arranged_in_a_carton_on_wooden_kitchen_counter_ready_for_cooking_or_baking.jpg"
+  },
+  {
+    "product": "Pimenta de cheiro",
+    "slug": "pimenta-de-cheiro",
+    "title": "Pimenta de cheiro (40615748253)",
+    "author": "Ministério Público de Pernambuco",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Pimenta_de_cheiro_(40615748253).jpg"
+  },
+  {
+    "product": "Pimenta de cheiro bandeja",
+    "slug": "pimenta-de-cheiro-bandeja",
+    "title": "Solanaceae- Capsicum chinense (habanero chili pepper)",
+    "author": "Kristof Zyskowski & Yulia Bereshpolova",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Solanaceae-_Capsicum_chinense_(habanero_chili_pepper).jpg"
+  },
+  {
+    "product": "Pimenta de cheiro de pacote",
+    "slug": "pimenta-de-cheiro-de-pacote",
+    "title": "GD Guangdong supermarket goods 香料 food spice 粗辣椒粉 plastic bag January 2024 R12S",
+    "author": "KAGYAMIUW Hangmaou",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:GD_Guangdong_supermarket_goods_%E9%A6%99%E6%96%99_food_spice_%E7%B2%97%E8%BE%A3%E6%A4%92%E7%B2%89_plastic_bag_January_2024_R12S.jpg"
+  },
+  {
+    "product": "Pimentão",
+    "slug": "pimentao",
+    "title": "Green bell pepper 2017 A",
+    "author": "Fructibus",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Green_bell_pepper_2017_A.jpg"
+  },
+  {
+    "product": "Pimentão colorido",
+    "slug": "pimentao-colorido",
+    "title": "Red, Yellow, and Green bell peppers",
+    "author": "Jiafei Slay Queen",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Red,_Yellow,_and_Green_bell_peppers.jpg"
+  },
+  {
+    "product": "Queijo",
+    "slug": "queijo",
+    "title": "Queijo Minas Frescal",
+    "author": "The original uploader was Hellkt at German Wikipedia. (Original text: de:Benutzer:Hellkt)",
+    "license": "Public domain",
+    "license_url": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Queijo_Minas_Frescal.JPG"
+  },
+  {
+    "product": "Quiabo",
+    "slug": "quiabo",
+    "title": "Quiabo",
+    "author": "ArionStar",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Quiabo.jpg"
+  },
+  {
+    "product": "Quiabo bandeja",
+    "slug": "quiabo-bandeja",
+    "title": "بامية خضره",
+    "author": "شيراز شوشو",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:%D8%A8%D8%A7%D9%85%D9%8A%D8%A9_%D8%AE%D8%B6%D8%B1%D9%87.jpg"
+  },
+  {
+    "product": "Rúcula",
+    "slug": "rucula",
+    "title": "rocket (arugula)",
+    "author": "jules:stonesoup",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "source": "https://www.flickr.com/photos/58367355@N00/4261356085"
+  },
+  {
+    "product": "Tangerina murcote",
+    "slug": "tangerina-murcote",
+    "title": "Tangerine 2009-03-11",
+    "author": "Kaldari",
+    "license": "Public domain",
+    "license_url": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Tangerine_2009-03-11.jpg"
+  },
+  {
+    "product": "Tomate cereja bandeja",
+    "slug": "tomate-cereja-bandeja",
+    "title": "Cherry-Tomatoes-in-Pack",
+    "author": "Evan-Amos",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Cherry-Tomatoes-in-Pack.jpg"
+  },
+  {
+    "product": "Tomate LV",
+    "slug": "tomate-lv",
+    "title": "Red Tomatoes",
+    "author": "Krzysztof%20Puszczy%u0144ski",
+    "license": "CC0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "source": "https://stocksnap.io/photo/red-tomatoes-GB9LU1L8RG"
+  },
+  {
+    "product": "Uva",
+    "slug": "uva",
+    "title": "Red grapes (1)",
+    "author": "Scott Bauer, U.S. Department of Agriculture",
+    "license": "Public domain",
+    "license_url": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Red_grapes_(1).jpg"
+  },
+  {
+    "product": "Uva verde",
+    "slug": "uva-verde",
+    "title": "Green Grape 3",
+    "author": "Martin Kozák",
+    "license": "Public domain",
+    "license_url": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Green_Grape_3.jpg"
+  },
+  {
+    "product": "Vagem",
+    "slug": "vagem",
+    "title": "Green Beans",
+    "author": "Mobentec",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "source": "https://www.flickr.com/photos/47586673@N03/5362356515"
+  },
+  {
+    "product": "Páprica defumada",
+    "slug": "paprica-defumada",
+    "title": "Spanishsmokedpaprika",
+    "author": "Badagnani",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Spanishsmokedpaprika.jpg"
+  },
+  {
+    "product": "Páprica picante",
+    "slug": "paprica-picante",
+    "title": "Sppon of Paprika",
+    "author": "Gnu-Bricoleur",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Sppon_of_Paprika.jpg"
+  },
+  {
+    "product": "Páprica doce",
+    "slug": "paprica-doce",
+    "title": "Hamburg, Gewürzmuseum, Paprika edelsüß aus Ungarn",
+    "author": "Dguendel",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Hamburg,_Gew%C3%BCrzmuseum,_Paprika_edels%C3%BC%C3%9F_aus_Ungarn.jpg"
+  },
+  {
+    "product": "Tempero baiano",
+    "slug": "tempero-baiano",
+    "title": "Nahrungsmittel 2012-07-08-9517",
+    "author": "Slick",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Nahrungsmittel_2012-07-08-9517.jpg"
+  },
+  {
+    "product": "Canela em pó",
+    "slug": "canela-em-po",
+    "title": "Ground cinnamon",
+    "author": "TheDeliciousLife",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ground_cinnamon.jpg"
+  },
+  {
+    "product": "Hibisco",
+    "slug": "hibisco",
+    "title": "Dried roselles",
+    "author": "Fumikas Sagisavas",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Dried_roselles.jpg"
+  },
+  {
+    "product": "Erva doce",
+    "slug": "erva-doce",
+    "title": "AniseSeeds",
+    "author": "User:Ben_pcc.",
+    "license": "Public domain",
+    "license_url": "",
+    "source": "https://commons.wikimedia.org/wiki/File:AniseSeeds.jpg"
+  },
+  {
+    "product": "Canela casca",
+    "slug": "canela-casca",
+    "title": "Cinnamon Sticks Spice Related (Free stock photo)",
+    "author": "trophygeek",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "source": "https://www.flickr.com/photos/65187097@N03/7309903584"
+  },
+  {
+    "product": "Bicarbonato de sódio",
+    "slug": "bicarbonato-de-sodio",
+    "title": "Sodium bicarbonate CN brightened",
+    "author": "Tszrkx",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Sodium_bicarbonate_CN_brightened.png"
+  },
+  {
+    "product": "Caldo de galinha",
+    "slug": "caldo-de-galinha",
+    "title": "Granulated chicken bouillon 1",
+    "author": "Anna Frodesiak",
+    "license": "CC0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "source": "https://commons.wikimedia.org/wiki/File:Granulated_chicken_bouillon_1.jpg"
+  },
+  {
+    "product": "Noz moscada",
+    "slug": "noz-moscada",
+    "title": "Whole Nutmeg",
+    "author": "Misterneedlemouse",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Whole_Nutmeg.jpg"
+  },
+  {
+    "product": "Tempero salsa, cebola e alho",
+    "slug": "tempero-salsa-cebola-e-alho",
+    "title": "Parsley Dried",
+    "author": "Miansari66",
+    "license": "Public domain",
+    "license_url": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Parsley_Dried.JPG"
+  },
+  {
+    "product": "Cravo",
+    "slug": "cravo",
+    "title": "Cloves",
+    "author": "Jorge Barrios",
+    "license": "Public domain",
+    "license_url": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Cloves.JPG"
+  },
+  {
+    "product": "Coentro em pó",
+    "slug": "coentro-em-po",
+    "title": "Ground Coriander and Coriander Leaf",
+    "author": "formulatehealth",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "source": "https://www.flickr.com/photos/189590028@N07/50191700291"
+  },
+  {
+    "product": "Camomila",
+    "slug": "camomila",
+    "title": "Loose chamomile tea",
+    "author": "Ehedaya (talk)Ehedaya",
+    "license": "Public domain",
+    "license_url": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Loose_chamomile_tea.jpg"
+  },
+  {
+    "product": "Orégano",
+    "slug": "oregano",
+    "title": "Oregano dried",
+    "author": "Miansari66",
+    "license": "Public domain",
+    "license_url": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Oregano_dried.JPG"
+  },
+  {
+    "product": "Colorífico",
+    "slug": "colorifico",
+    "title": "Achiote Powder Annatto Seeds (4422836316)",
+    "author": "Ryan Snyder",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Achiote_Powder_Annatto_Seeds_(4422836316).jpg"
+  },
+  {
+    "product": "Açafrão em pó",
+    "slug": "acafrao-em-po",
+    "title": "Turmeric Powder on a Spoon - Black Background",
+    "author": "formulatehealth",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Turmeric_Powder_on_a_Spoon_-_Black_Background.jpg"
+  },
+  {
+    "product": "Folha de louro",
+    "slug": "folha-de-louro",
+    "title": "Whole Bay Leaves",
+    "author": "Misterneedlemouse",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Whole_Bay_Leaves.jpg"
+  },
+  {
+    "product": "Alho granulado",
+    "slug": "alho-granulado",
+    "title": "Ground-Garlic 31534-480x360 (4904476773)",
+    "author": "Emilian Robert Vicol from Com. Balanesti, Romania",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ground-Garlic_31534-480x360_(4904476773).jpg"
+  },
+  {
+    "product": "Lemon Pepper",
+    "slug": "lemon-pepper",
+    "title": "Lemon pepper - Zitronenpfeffer",
+    "author": "Feuerrabe",
+    "license": "CC BY 3.0 de",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/de/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Lemon_pepper_-_Zitronenpfeffer.jpg"
+  },
+  {
+    "product": "Chimichurri S/pimenta",
+    "slug": "chimichurri-s-pimenta",
+    "title": "Herbesdeprovence",
+    "author": "French Tart-FT (https://www.flickr.com/photos/frenchtart/)",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Herbesdeprovence.jpg"
+  },
+  {
+    "product": "Pimenta calabresa flocos",
+    "slug": "pimenta-calabresa-flocos",
+    "title": "Red pepper flakes for pickling",
+    "author": "Nutrition, Food Safety & Health",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Red_pepper_flakes_for_pickling.jpg"
+  },
+  {
+    "product": "Pimenta do reino moída",
+    "slug": "pimenta-do-reino-moida",
+    "title": "Spilled Pepper",
+    "author": "Bryanwake at English Wikipedia",
+    "license": "Public domain",
+    "license_url": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Spilled_Pepper.jpg"
+  },
+  {
+    "product": "Chimichurri C/pimenta",
+    "slug": "chimichurri-c-pimenta",
+    "title": "Chimichurri Sauce Recipe (13294466363)",
+    "author": "Dominic Lockyer",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Chimichurri_Sauce_Recipe_(13294466363).jpg"
+  }
+]

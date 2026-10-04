@@ -1,0 +1,44 @@
+.adm { min-height: 100%; display: flex; flex-direction: column; }
+.adm-top { display: flex; align-items: center; gap: 10px; padding: 10px 18px; background: var(--folha-3); color: #fff; flex-wrap: wrap; }
+.adm-top .btn { min-height: 36px; }
+.adm-badge { background: var(--lima); color: var(--carvao); font-weight: 700; font-size: 12px; padding: 3px 8px; border-radius: 999px; text-transform: uppercase; letter-spacing: .04em; }
+.adm-top .spacer, .spacer { flex: 1; }
+.adm-stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.adm-stats .card { display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; }
+.adm-stats span { color: var(--cinza); font-size: 13px; font-weight: 600; } .adm-stats b { font-size: 24px; }
+.adm-search { min-width: 260px; }
+.adm-table td { vertical-align: middle; }
+.adm-table .nowrap, .nowrap { white-space: nowrap; }
+.adm-table td.neg { color: var(--tomate-2, #B42318); font-weight: 700; } .adm-table td.warn { color: #9A6700; font-weight: 700; }
+.adm-acts { display: flex; gap: 6px; }
+.adm-head { background: var(--folha-clara); border-radius: 10px; padding: 8px 12px; font-size: 14px; }
+.adm-events { display: flex; flex-direction: column; gap: 6px; max-height: 320px; overflow: auto; }
+.adm-login { min-height: 100%; display: flex; align-items: center; justify-content: center; padding: 20px; background: var(--folha-3); }
+.adm-login-box { width: min(400px, 100%); gap: 14px; padding: 24px; }
+button.link { background: none; border: 0; padding: 0; color: inherit; cursor: pointer; text-align: left; font: inherit; }
+button.link:hover b { text-decoration: underline; }
+.tag.st-carencia { background: #FFF4D6; color: #7A5200; }
+@media (max-width: 900px) {
+  .adm-stats { grid-template-columns: repeat(2, 1fr); }
+  .adm-search { min-width: 0; flex: 1 1 100%; }
+  .adm-acts { flex-direction: column; }
+}
+.adm-top .btn { color: var(--carvao); }
+.adm-toolbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 10px; }
+.adm-toolbar h3 { margin: 0; margin-right: 8px; }
+.adm-toolbar .adm-search { flex: 1 1 260px; width: auto; }
+.adm-toolbar select.input { width: auto; }
+.adm .page, .adm .card { min-width: 0; }
+@media (max-width: 760px) {
+  .adm-table thead { display: none; }
+  .adm-table, .adm-table tbody, .adm-table tr, .adm-table td { display: block; width: 100%; }
+  .adm-table tr { border: 1px solid var(--linha); border-radius: 12px; padding: 8px 10px; margin-bottom: 10px; background: #fff; }
+  .adm-table td { border: 0; padding: 4px 0; display: flex; justify-content: space-between; gap: 10px; text-align: right; }
+  .adm-table td::before { content: attr(data-label); color: var(--cinza); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .03em; text-align: left; }
+  .adm-table td[data-label="Loja"] { display: block; text-align: left; font-size: 16px; }
+  .adm-table td[data-label="Loja"]::before { display: none; }
+  .adm-table td.adm-acts { flex-direction: row; flex-wrap: wrap; justify-content: flex-start; padding-top: 8px; }
+  .adm-table td.adm-acts::before { display: none; }
+  .adm-top { padding: 10px 12px; }
+  .adm .page { padding: 12px; }
+}

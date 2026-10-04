@@ -1,0 +1,29 @@
+{
+  "name": "caixa-certo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Caixa Certo — caixa (PDV) online multi-loja para hortifruti. Nome provisório: troque em shared/src/brand.ts.",
+  "workspaces": [
+    "shared",
+    "server",
+    "web"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w server & npm run dev -w web",
+    "build": "npm run typecheck -w shared && npm run build -w web && npm run build -w server",
+    "start": "npm run start -w server",
+    "test": "npm test -w server",
+    "seed": "npm run seed -w server",
+    "zip": "bash scripts/zip.sh",
+    "build:pages": "npm run typecheck -w shared && npm run build:pages -w web",
+    "db:apply": "node supabase/apply.mjs",
+    "icons": "node scripts/icons.mjs",
+    "db:auth": "node supabase/auth-config.mjs",
+    "admin:create": "node scripts/create-super-admin.mjs",
+    "test:isolation": "node scripts/test-isolation.mjs"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "playwright-core": "^1.48.0"
+  }
+}

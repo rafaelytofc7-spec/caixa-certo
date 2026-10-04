@@ -1,0 +1,27 @@
+node_modules/
+dist/
+server/data/
+*.db
+*.db-*
+*.log
+.DS_Store
+
+# segredos (senha do banco, senha do admin, tokens) — NUNCA no repositório
+.secrets/
+.env
+.env.*
+!web/.env.supabase
+!web/.env.supabase.example
+*.pem
+*.key
+
+# CLI do Supabase
+supabase/.temp/
+supabase/supabase/
+supabase/sql_old/
+
+# prints só na máquina (mesmo com dados de teste)
+docs/prints/
+
+# resultados de testes locais
+test-results*.json
