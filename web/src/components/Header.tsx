@@ -18,7 +18,7 @@ export const NAV: NavItem[] = [
 const PHONE_MAIN: Record<string, string[]> = { mgr: ['venda', 'hoje', 'vendas', 'estoque'], op: ['venda', 'caixa', 'vendas', 'fiado'] };
 
 export function Header() {
-  const { user, status, route, go, logout, switchOperator, storeLogout, store, pending } = useApp();
+  const { user, status, route, go, logout, switchOperator, storeLogout, store, pending, loja } = useApp();
   const [menu, setMenu] = useState(false);
   const [more, setMore] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -49,7 +49,7 @@ export function Header() {
       <header className="header no-print">
         <button className="hdr-logo" onClick={() => nav('venda')} aria-label="Ir para a venda"><Logo size={28} light /></button>
         <div className="sep" />
-        <div className="store" title={status?.store?.name}>{status?.store?.name ?? '…'}</div>
+        <div className="store" data-testid="store-name" title={status?.store?.name || loja?.nome}>{status?.store?.name || loja?.nome || '…'}</div>
         <button className={`status-pill ${open ? 'aberto' : 'fechado'}`} title={open ? `Aberto por ${open.opened_by_name}` : 'Caixa fechado'} onClick={() => nav('caixa')}>
           <span className="dot" />{open ? 'Caixa aberto' : 'Caixa fechado'} <span className="term">{getTerminal()}</span>
         </button>
