@@ -22,19 +22,6 @@ export async function rpc<T = any>(fn: string, args: Record<string, unknown> = {
   return r.data as T;
 }
 
-export async function fn(body: Record<string, unknown>) {
-  const { data } = await sb().auth.getSession();
-  if (!data.session) throw new AdminError('Entre de novo.', 'SEM_LOGIN');
-  let r: Response;
-  try {
-    r = await fetch(`${URL}/functions/v1/accounts`, { method: 'POST',
-      headers: { apikey: KEY, Authorization: `Bearer ${data.session.access_token}`, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-  } catch { throw new AdminError('Sem internet.', 'SEM_INTERNET'); }
-  const j = await r.json().catch(() => ({}));
-  if (!r.ok) throw new AdminError(j.error || `Erro ${r.status}`, j.code || 'ERRO');
-  return j;
-}
-
 export async function signIn(usuario: string, senha: string) {
   const { error } = await sb().auth.signInWithPassword({ email: adminEmail(usuario), password: senha });
   if (error) throw new AdminError(/fetch/i.test(error.message) ? 'Sem internet.' : 'Usuário ou senha incorretos.', 'LOGIN');

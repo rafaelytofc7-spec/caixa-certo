@@ -16,14 +16,15 @@
     "seed": "npm run seed -w server",
     "zip": "bash scripts/zip.sh",
     "build:pages": "npm run typecheck -w shared && npm run build:pages -w web",
-    "db:apply": "node supabase/apply.mjs",
+    "db:apply": "node supabase/apply-db.mjs",
     "icons": "node scripts/icons.mjs",
     "db:auth": "node supabase/auth-config.mjs",
     "admin:create": "node scripts/create-super-admin.mjs",
     "test:isolation": "node scripts/test-isolation.mjs"
   },
   "devDependencies": {
-    "typescript": "^5.6.3",
-    "playwright-core": "^1.48.0"
+    "pg": "^8.23.1",
+    "playwright-core": "^1.48.0",
+    "typescript": "^5.6.3"
   }
 }

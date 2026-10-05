@@ -3,7 +3,7 @@ import { BRAND, formatBRL } from '@folha/shared';
 import { Modal } from '../components/Modal';
 import { Logo } from '../components/Logo';
 import { docDigits, docType, maskDoc, maskPhoneBR } from '../doc';
-import { sb, rpc, fn, signIn, changePassword, CONFIGURED, LojaAdm, Config, AdminError } from './api';
+import { sb, rpc, signIn, changePassword, CONFIGURED, LojaAdm, Config, AdminError } from './api';
 
 const fmtD = (iso?: string | null) => (iso ? iso.slice(0, 10).split('-').reverse().join('/') : '—');
 const fmtDT = (iso?: string | null) => (iso ? new Date(iso).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit' }) : '—');
@@ -268,7 +268,7 @@ function ResetPassDlg({ loja, onClose, onDone }: { loja: LojaAdm; onClose: () =>
   );
   return (
     <Modal title="🔑 Redefinir senha de usuário da loja" onClose={onClose} size="sm"
-      footer={<><button className="btn" onClick={onClose}>Cancelar</button><button className="btn btn-primary" disabled={a.busy || !u} onClick={() => a.run(async () => { await fn({ action: 'admin_set_password', loja_id: loja.id, usuario: u, password: p }); setOk(true); })}>{a.busy ? 'Salvando…' : 'Gerar nova senha'}</button></>}>
+      footer={<><button className="btn" onClick={onClose}>Cancelar</button><button className="btn btn-primary" disabled={a.busy || !u} onClick={() => a.run(async () => { await rpc('account_admin_password', { p_loja: loja.id, p_usuario: u, p_password: p }); setOk(true); })}>{a.busy ? 'Salvando…' : 'Gerar nova senha'}</button></>}>
       <Head l={loja} />
       <label className="field">Usuário da loja<input className="input mono" value={u} onChange={(e) => setU(e.target.value.trim().toLowerCase())} /></label>
       <div className="hint">Use quando o dono esqueceu a senha. Fica registrado no histórico da loja.</div>
@@ -336,8 +336,8 @@ function NewStoreDlg({ cfg, onClose, onDone }: { cfg: Config; onClose: () => voi
         if (!tipo) throw new Error('CPF ou CNPJ inválido.');
         const c = f.valor.trim() === '' ? 0 : toCents(f.valor);
         if (!Number.isFinite(c) || c < 0) throw new Error('Valor mensal inválido.');
-        await fn({ action: 'admin_create_loja', loja_nome: f.loja.trim(), documento: docDigits(f.doc), responsavel: f.responsavel.trim(), usuario: f.usuario, senha,
-          whatsapp: f.whatsapp.replace(/\D/g, ''), status: f.status, vencimento: f.vencimento, plano: f.plano, valor_mensal_cents: c, observacao: f.observacao });
+        await rpc('account_admin_new_loja', { p_data: { loja_nome: f.loja.trim(), documento: docDigits(f.doc), responsavel: f.responsavel.trim(), usuario: f.usuario, senha,
+          whatsapp: f.whatsapp.replace(/\D/g, ''), status: f.status, vencimento: f.vencimento, plano: f.plano, valor_mensal_cents: c, observacao: f.observacao } });
         setOk(true);
       })}>{a.busy ? 'Criando…' : 'Criar loja'}</button></>}>
       <div className="grid2 tight">

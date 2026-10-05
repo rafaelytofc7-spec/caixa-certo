@@ -1,7 +1,7 @@
 // Contas do modo online: CPF/CNPJ da loja + usuário + senha. Viram o e-mail interno
 // <documento>.<usuario>@lojas.caixacerto.invalid no Supabase Auth (ninguém recebe e-mail).
-// Contas só são criadas pela Edge Function "accounts" (cadastro da loja, funcionários, painel).
-import { sb, SB_URL, SB_KEY } from './client';
+// Contas são criadas por funções do banco (account_signup, account_user_create…), que conferem quem chama.
+import { sb } from './client';
 import { ApiError, getToken, getTerminal, setToken } from '../api';
 import { STORE_EMAIL_DOMAIN } from '@folha/shared';
 import { docDigits } from '../doc';
@@ -15,21 +15,16 @@ export const usernameOf = (email?: string | null) => (email ?? '').replace(`@${S
 
 const netErr = () => new ApiError(0, 'Sem internet. Conecte para entrar.', 'SEM_INTERNET');
 
-export async function callFn(body: Record<string, unknown>, withSession: boolean) {
-  let auth = SB_KEY;
-  if (withSession) {
-    const { data } = await sb().auth.getSession();
-    if (!data.session) throw new ApiError(401, 'Entre com usuário e senha.', 'SEM_LOGIN');
-    auth = data.session.access_token;
+/** chama uma função de conta do banco (sem Edge Function: cada função confere quem chama) */
+export async function callRpc(fn: string, args: Record<string, unknown>) {
+  let r;
+  try { r = await sb().rpc(fn, args); } catch { throw netErr(); }
+  if (r.error) {
+    if (/fetch|network/i.test(r.error.message)) throw netErr();
+    const code = r.error.hint && /^[A-Z_]+$/.test(r.error.hint) ? r.error.hint : 'ERRO';
+    throw new ApiError(code === 'PROIBIDO' ? 403 : code === 'SEM_LOGIN' || code === 'SEM_PIN' ? 401 : 400, r.error.message, code);
   }
-  let r: Response;
-  try {
-    r = await fetch(`${SB_URL}/functions/v1/accounts`, { method: 'POST',
-      headers: { apikey: SB_KEY, Authorization: `Bearer ${auth}`, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-  } catch { throw netErr(); }
-  const j = await r.json().catch(() => ({}));
-  if (!r.ok) throw new ApiError(r.status, j.error || `Erro ${r.status}`, j.code || 'ERRO');
-  return j;
+  return r.data;
 }
 
 /** lojas já usadas neste aparelho: documento → nome (para mostrar o nome da loja no login) */
@@ -87,16 +82,16 @@ export async function openOwnSession() {
 export interface SignupForm { loja_nome: string; documento: string; responsavel: string; usuario: string; senha: string; whatsapp: string; pin?: string }
 /** "Criar conta da loja": cria a loja (teste grátis) + o login do dono, e já entra. */
 export async function signupStore(f: SignupForm) {
-  await callFn({ action: 'signup', ...f, documento: docDigits(f.documento), usuario: cleanUsername(f.usuario) }, false);
+  await callRpc('account_signup', { p_data: { ...f, documento: docDigits(f.documento), usuario: cleanUsername(f.usuario) } });
   return signIn(f.documento, f.usuario, f.senha);
 }
 
 /** Dono cria funcionário com usuário + senha (+ PIN opcional) — o login usa o CPF/CNPJ da loja */
 export const createUser = (f: { name: string; username: string; password: string; role: string; pin?: string }) =>
-  callFn({ action: 'create_user', token: getToken(), ...f, username: cleanUsername(f.username) }, true);
+  callRpc('account_user_create', { p_token: getToken(), p_data: { ...f, username: cleanUsername(f.username) } });
 
 /** Dono define uma nova senha para alguém da loja */
-export const setPassword = (userId: number, password: string) => callFn({ action: 'set_password', token: getToken(), user_id: userId, password }, true);
+export const setPassword = (userId: number, password: string) => callRpc('account_user_password', { p_token: getToken(), p_user_id: userId, p_password: password });
 
 /** Troca a própria senha (confere a atual antes) */
 export async function changeOwnPassword(current: string, next: string) {

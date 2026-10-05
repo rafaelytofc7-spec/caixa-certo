@@ -58,8 +58,8 @@ Primeiro acesso do Rafael: usuário `rafael`. A senha temporária fica **só** n
 - **RLS em todas as tabelas:** só leitura direta, e só de linhas com `loja_id = current_loja_id()` com a loja liberada. Toda escrita passa por funções do banco que conferem login, papel e loja. O papel `anon` não lê nem grava nada.
 - As funções das lojas rodam como um papel sem privilégios (`app_definer`, **sem** bypass de RLS). Mesmo se uma função tivesse um erro, o RLS ainda impediria tocar em outra loja.
 - `super_admins`, `pagamentos`, `lojas`, `loja_eventos` e `plataforma_config` não podem ser lidas pelas lojas. As funções `admin_*` dão erro para quem não é super admin. Um super admin não pode ser membro de loja, e um membro de loja não pode virar super admin (trigger no banco).
-- Logins são e-mails internos que ninguém recebe: `<documento>.<usuario>@lojas.caixacerto.invalid` (lojas) e `<usuario>@admin.caixacerto.invalid` (painel). O cadastro público do Supabase Auth fica **desligado**: contas só nascem pela Edge Function `accounts`, que valida tudo.
-- No navegador só vai a chave **pública** (anon). A service_role fica só na Edge Function (variável do Supabase).
+- Logins são e-mails internos que ninguém recebe: `<documento>.<usuario>@lojas.caixacerto.invalid` (lojas) e `<usuario>@admin.caixacerto.invalid` (painel). Contas só nascem por funções do banco (`supabase/sql/12_accounts_rpc.sql`: `account_signup`, `account_user_*`, `account_admin_*`), que validam tudo e criam o login já confirmado. Um cadastro feito direto no Supabase Auth não pertence a nenhuma loja e não vê nada.
+- No navegador só vai a chave **pública** (anon). A service_role não é usada em lugar nenhum. O único acesso do `anon` é `account_signup` (com limite de 30 lojas novas por hora).
 - O app e o painel guardam sessões separadas (`cc.sb.auth` e `cc.admin.auth`). Cache e fila offline são separados por loja: uma venda feita sem internet nunca é enviada para outra loja que entre no mesmo aparelho.
 
 ### LGPD
@@ -73,7 +73,7 @@ O **CPF/CNPJ da loja é visível apenas para a própria loja e para o super admi
 Tudo vem de **`shared/src/brand.ts`**: `NAME` (nome), `tagline`, `description`, `url`, `supportWhatsapp`, `supportMessage` e `trialDays`.
 Título da página, manifest do app instalado, telas, cupom, PDF e painel leem dali. Depois de trocar, rode `npm run build:pages` e faça o push.
 Não mude `STORE_EMAIL_DOMAIN` / `ADMIN_EMAIL_DOMAIN` depois de haver lojas cadastradas, porque os logins existentes usam esses domínios.
-Se o endereço mudar (outro repositório ou domínio), ajuste também `base` em `web/vite.config.ts` e `site_url` em `supabase/auth-config.mjs`.
+Se o endereço mudar (outro repositório ou domínio), ajuste também `base` em `web/vite.config.ts` (e o Site URL em Authentication › URL Configuration).
 
 ## O que ainda é provisório
 
@@ -85,16 +85,17 @@ Se o endereço mudar (outro repositório ou domínio), ajuste também `base` em 
 
 ## Colocar no ar (uma vez)
 
-Pré-requisitos: Node 22, `gh` logado, Supabase CLI (`npx supabase`), um **token pessoal** do Supabase em `SUPABASE_ACCESS_TOKEN` (Dashboard › Account › Access Tokens).
+Pré-requisitos: Node 22 e `gh` logado. Não precisa de Edge Function nem de token da Management API: tudo vai pela conexão Postgres.
+Variáveis usadas abaixo (pooler de São Paulo): `DB_HOST=aws-0-sa-east-1.pooler.supabase.com DB_USER=postgres.<ref> DB_PASSWORD_FILE=.secrets/db.txt`.
 
-1. **Criar o projeto** no Supabase: nome `caixa-certo`, região **São Paulo (sa-east-1)**, senha do banco forte (guarde-a em `.secrets/db.txt`, que está fora do git). Anote o **ref** do projeto.
-2. **Banco:** `SUPABASE_PROJECT_REF=<ref> npm run db:apply` (aplica `supabase/sql/*.sql` em ordem; recusa o projeto do Folha Caixa).
-3. **Auth:** `SUPABASE_PROJECT_REF=<ref> npm run db:auth` (cadastro público desligado, sem anônimo, sem confirmação de e-mail, senha mínima 8).
-4. **Edge Function:** `npx supabase functions deploy accounts --no-verify-jwt --project-ref <ref>` (a função confere o login sozinha).
-5. **Super admin:** `SUPABASE_PROJECT_REF=<ref> npm run admin:create -- rafael` → a senha vai para `.secrets/admin.txt` (chmod 600).
-6. **Front:** copie `web/.env.supabase.example` para `web/.env.supabase` com a URL e a chave **anon** do projeto.
-7. **Testes no projeto novo:** `SUPABASE_PROJECT_REF=<ref> npm run test:isolation` (cria lojas A e B e um super admin de teste, confere tudo pela API REST e apaga o que criou).
-8. **Publicar:** `gh repo create rafaelytofc7-spec/caixa-certo --public --source . --push` e, em Settings › Pages, escolha **GitHub Actions**. O workflow `.github/workflows/pages.yml` roda os testes, compila o app + `admin.html` e publica.
+1. **Criar o projeto** no Supabase: região **São Paulo (sa-east-1)**, senha do banco forte em `.secrets/db.txt` (fora do git). Projeto atual: `ormwgxewllplyxvecgzn`.
+2. **Banco:** `node supabase/apply-db.mjs` (aplica `supabase/sql/*.sql` em ordem, liga RLS e revoga os acessos padrão; recusa o projeto do Folha Caixa).
+3. **Super admin:** `npm run admin:create -- rafael` → a senha vai para `.secrets/admin.txt` (chmod 600). `--reset` gera outra.
+4. **Front:** `web/.env.supabase` com a URL e a chave **anon** (pública) do projeto.
+5. **Testes no projeto real:** `SB_URL=https://<ref>.supabase.co SB_ANON=<chave anon> npm run test:isolation` (cria lojas de teste e um super admin de teste, confere isolamento e bloqueio pela API e apaga o que criou).
+6. **Publicar:** push no GitHub; Pages com origem **GitHub Actions**. O workflow `.github/workflows/pages.yml` roda os testes, compila o app + `admin.html` e publica.
+
+Recomendado no dashboard do Supabase: Authentication › Sign In / Providers › desligar **Allow new users to sign up** (o app não usa o cadastro do Auth; contas vêm das funções do banco). `supabase/apply.mjs` e `supabase/auth-config.mjs` fazem o mesmo via Management API, mas exigem token pessoal.
 
 ## Desenvolvimento
 
@@ -106,7 +107,7 @@ npm run dev:online -w web   # app em modo online apontando para o Supabase de we
 ```
 
 Estrutura: `web/` (React/Vite: app das lojas e `src/admin/` do painel), `shared/` (regras, cupom, `brand.ts`),
-`supabase/sql/` (esquema, RLS e funções), `supabase/functions/accounts/` (cadastro e contas), `scripts/test-isolation.mjs` (teste de isolamento),
+`supabase/sql/` (esquema, RLS e funções), `supabase/apply-db.mjs` (aplica o banco), `scripts/test-isolation.mjs` (teste de isolamento),
 `server/` (modo local/offline com SQLite, herdado; usado nos testes de unidade).
 
 Créditos das fotos de produtos: `docs/creditos-imagens.md` (todas com licença livre: CC0, domínio público ou CC BY).

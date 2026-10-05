@@ -20,19 +20,26 @@ declare t text; f record;
     '_doc_tipo','_doc_norm','_doc_fmt','_seed_categories','account_signup_check','_create_loja','account_signup_loja',
     'account_admin_create_loja','account_admin_check','account_admin_target','_admin_from_token','account_check_admin','account_create','account_target',
     '_touch_loja','minha_loja','_require_super_admin','admin_me','_admin_loja_json','admin_lojas','admin_loja',
-    'admin_registrar_pagamento','admin_bloquear','admin_desbloquear','admin_editar_loja','admin_config_salvar'];
+    'admin_registrar_pagamento','admin_bloquear','admin_desbloquear','admin_editar_loja','admin_config_salvar',
+    '_store_email','_check_password','_auth_create_user','_auth_set_password','_check_person','account_signup','account_admin_new_loja',
+    'account_admin_password','account_user_create','account_user_password'];
+  -- mexem em auth.users: ninguém além das funções de conta abaixo pode chamar
+  auth_internal text[] := array['_auth_create_user','_auth_set_password'];
+  -- cadastro público (chave anon)
+  public_rpc text[] := array['account_signup'];
   -- RPCs que o app da loja chama
   store_rpc text[] := array['pin_login','pin_logout','op_me','session_summary','cash_open','cash_move','cash_close','sale_get','sale_create',
     'sale_cancel','held_create','held_resume','stock_entry','stock_adjust','stock_loss','expiring_lots','top_sellers','product_save',
     'shortcuts_set','customer_save','customer_charge','customer_receive','customer_statement','settings_update','user_save',
     'app_status','report','self_login','pin_users','users_list','supplier_save','purchase_entry',
     'prices_update','product_usage','product_delete','product_restore','promo_save','promo_end','cash_book_days','cash_book_detail',
-    'order_save','order_notify','order_ready','order_cancel','order_conclude','sale_delete','minha_loja','load_sample_products'];
+    'order_save','order_notify','order_ready','order_cancel','order_conclude','sale_delete','minha_loja','load_sample_products',
+    'account_user_create','account_user_password'];
   -- usadas dentro das políticas RLS / views (executadas como o usuário que consulta)
   policy_fns text[] := array['current_loja_id','loja_liberada','_local_date'];
   -- RPCs do painel (cada uma recusa quem não é super admin)
   admin_rpc text[] := array['admin_me','admin_lojas','admin_loja','admin_registrar_pagamento','admin_bloquear','admin_desbloquear',
-    'admin_editar_loja','admin_config_salvar'];
+    'admin_editar_loja','admin_config_salvar','account_admin_new_loja','account_admin_password'];
   -- só a Edge Function "accounts" (service_role, no servidor)
   service_rpc text[] := array['account_signup_check','account_signup_loja','account_admin_create_loja','account_admin_check','account_admin_target',
     'account_check_admin','account_create','account_target'];
@@ -78,11 +85,14 @@ begin
     else
       execute format('alter function %s owner to app_definer', f.sig);
     end if;
-    if not (f.proname = any(admin_rpc) or f.proname = any(service_rpc) or f.proname in ('_create_loja','_admin_from_token','_require_super_admin','_admin_loja_json','is_super_admin')) then
+    if not (f.proname = any(admin_rpc) or f.proname = any(service_rpc) or f.proname = any(auth_internal) or f.proname = any(public_rpc) or f.proname in ('_create_loja','_admin_from_token','_require_super_admin','_admin_loja_json','is_super_admin')) then
       execute format('grant execute on function %s to app_definer', f.sig);
     end if;
     if f.proname = any(store_rpc) or f.proname = any(policy_fns) or f.proname = any(admin_rpc) then
       execute format('grant execute on function %s to authenticated', f.sig);
+    end if;
+    if f.proname = any(public_rpc) then
+      execute format('grant execute on function %s to anon, authenticated', f.sig);
     end if;
     if f.proname = any(service_rpc) then
       execute format('grant execute on function %s to service_role', f.sig);

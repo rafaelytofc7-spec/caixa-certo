@@ -1,23 +1,26 @@
 // Teste de isolamento entre lojas, bloqueio e painel — direto pela API REST do Supabase (sem a tela).
 // Cria lojas de teste A e B + um super admin de teste, confere tudo e APAGA o que criou no fim.
+// Tudo que uma loja/visitante faz vai pela API pública (chave anon + login). Só a preparação (criar o super admin de teste,
+// tentar burlar o banco) e a limpeza usam SQL direto como postgres.
 //
-// Projeto Supabase real:  SUPABASE_PROJECT_REF=<ref> SUPABASE_ACCESS_TOKEN=... node scripts/test-isolation.mjs
-//   (as chaves anon/service_role são buscadas pela Management API e ficam só na memória — nunca são impressas)
-// Local:                  SB_URL=http://127.0.0.1:54320 SB_ANON=... SB_SERVICE=... node scripts/test-isolation.mjs
+// Uso: SB_URL=https://<ref>.supabase.co SB_ANON=<chave anon> \
+//      DB_HOST=aws-0-sa-east-1.pooler.supabase.com DB_USER=postgres.<ref> DB_PASSWORD_FILE=.secrets/db.txt node scripts/test-isolation.mjs
+// Local: SB_URL=http://127.0.0.1:54320 SB_ANON=... DB_HOST=127.0.0.1 DB_PORT=54329 DB_USER=postgres DB_PASSWORD_FILE=... DB_SSL=0
 import crypto from 'node:crypto';
+import fs from 'node:fs';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+let pg; try { pg = require('pg'); } catch { pg = require('/workspace/pgtest/node_modules/pg'); }
 
 const FORBIDDEN = ['cprtigvovwbmigxbosac']; // Folha Caixa (dados reais) — nunca
-let URL_ = process.env.SB_URL, ANON = process.env.SB_ANON, SERVICE = process.env.SB_SERVICE;
-const REF = process.env.SUPABASE_PROJECT_REF;
-if (REF) {
-  if (FORBIDDEN.includes(REF)) { console.error('Recusado: projeto do Folha Caixa.'); process.exit(1); }
-  const r = await fetch(`https://api.supabase.com/v1/projects/${REF}/api-keys?reveal=true`, { headers: { Authorization: `Bearer ${process.env.SUPABASE_ACCESS_TOKEN}` } });
-  if (!r.ok) { console.error('Não deu para ler as chaves do projeto:', r.status); process.exit(1); }
-  const keys = await r.json();
-  const pick = (n) => keys.find((k) => k.name === n && k.api_key)?.api_key;
-  URL_ = `https://${REF}.supabase.co`; ANON = pick('anon'); SERVICE = pick('service_role');
-}
-if (!URL_ || !ANON || !SERVICE) { console.error('Faltam SB_URL/SB_ANON/SB_SERVICE (ou SUPABASE_PROJECT_REF).'); process.exit(1); }
+const URL_ = process.env.SB_URL, ANON = process.env.SB_ANON;
+if (!URL_ || !ANON || !process.env.DB_HOST || !process.env.DB_USER || !process.env.DB_PASSWORD_FILE) { console.error('Faltam SB_URL, SB_ANON, DB_HOST, DB_USER, DB_PASSWORD_FILE.'); process.exit(1); }
+if (FORBIDDEN.some((f) => URL_.includes(f) || process.env.DB_USER.includes(f))) { console.error('Recusado: projeto do Folha Caixa.'); process.exit(1); }
+const db = new pg.Client({ host: process.env.DB_HOST, port: Number(process.env.DB_PORT || 5432), user: process.env.DB_USER, database: 'postgres',
+  password: fs.readFileSync(process.env.DB_PASSWORD_FILE, 'utf8').trim(), ssl: process.env.DB_SSL === '0' ? false : { rejectUnauthorized: false } });
+await db.connect();
+const sql = async (q, params = []) => (await db.query(q, params)).rows;
+const sqlTry = async (q, params = []) => { try { return { ok: true, rows: await sql(q, params) }; } catch (e) { return { ok: false, error: e.message }; } };
 const STORE_DOMAIN = 'lojas.caixacerto.invalid';
 const ADMIN_DOMAIN = 'admin.caixacerto.invalid';
 
@@ -46,9 +49,19 @@ async function http(method, path, { jwt = ANON, body, headers = {} } = {}) {
 }
 const rest = (method, table, q = '', opt = {}) => http(method, `/rest/v1/${table}${q ? '?' + q : ''}`, opt);
 const rpc = (fn, args, jwt) => http('POST', `/rest/v1/rpc/${fn}`, { jwt, body: args ?? {} });
-const fn = (body, jwt) => http('POST', '/functions/v1/accounts', { jwt, body });
-const svc = { apikey: SERVICE };
-const restSvc = (method, table, q, body) => http(method, `/rest/v1/${table}?${q}`, { jwt: SERVICE, body, headers: { apikey: SERVICE, Prefer: 'return=representation' } });
+// as ações de conta (antes numa Edge Function) agora são RPCs do banco; a resposta é normalizada para {ok, data:{code,error}|resultado}
+async function fn(body, jwt = ANON) {
+  const { action, ...b } = body;
+  const call = {
+    signup: ['account_signup', { p_data: b }],
+    admin_create_loja: ['account_admin_new_loja', { p_data: b }],
+    admin_set_password: ['account_admin_password', { p_loja: b.loja_id, p_usuario: b.usuario, p_password: b.password }],
+    create_user: ['account_user_create', { p_token: b.token, p_data: { name: b.name, username: b.username, password: b.password, role: b.role, pin: b.pin } }],
+    set_password: ['account_user_password', { p_token: b.token, p_user_id: b.user_id, p_password: b.password }],
+  }[action];
+  const r = await rpc(call[0], call[1], jwt);
+  return r.ok ? r : { ...r, data: { code: r.data?.hint || r.data?.code, error: r.data?.message, raw: r.data } };
+}
 async function login(email, password) {
   const r = await http('POST', '/auth/v1/token?grant_type=password', { body: { email, password } });
   if (!r.ok) throw new Error('login falhou ' + email + ' ' + JSON.stringify(r.data));
@@ -139,8 +152,22 @@ try {
   check('cadastro', 'recusa documento duplicado', !r.ok && r.data?.code === 'DOC_EXISTE', JSON.stringify(r.data));
   r = await fn({ action: 'signup', loja_nome: 'Outra', documento: B.doc.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5'), responsavel: 'Fulano', usuario: 'outro' + RUN, senha: 'Senha-12345' });
   check('cadastro', 'recusa documento duplicado (com máscara)', !r.ok && r.data?.code === 'DOC_EXISTE', JSON.stringify(r.data));
-  r = await http('POST', '/auth/v1/signup', { body: { email: `x${RUN}@${STORE_DOMAIN}`, password: 'Senha-12345' } });
-  check('cadastro', 'cadastro público direto no Auth desligado', !r.ok, JSON.stringify(r.data));
+  // cadastro direto no Supabase Auth (fora do app): ou está desligado, ou o login criado não enxerga nada
+  // e não consegue "reservar" o CPF/CNPJ + usuário de uma loja de verdade
+  const C = store('C', cpf());
+  r = await http('POST', '/auth/v1/signup', { body: { email: `${C.doc}.${C.user}@${STORE_DOMAIN}`, password: 'Senha-12345' } });
+  if (!r.ok) check('cadastro', 'cadastro público direto no Auth desligado', true);
+  else {
+    const sj = r.data?.access_token;
+    if (sj) {
+      const y = await rpc('minha_loja', {}, sj); check('cadastro', 'login criado direto no Auth não é de nenhuma loja', !y.ok && y.data?.hint === 'SEM_LOJA', JSON.stringify(y.data));
+      const y2 = await rest('GET', 'products', 'select=id', { jwt: sj }); check('cadastro', 'login criado direto no Auth não lê dados', y2.ok && y2.data.length === 0, JSON.stringify(y2.data).slice(0, 100));
+    } else check('cadastro', 'cadastro direto no Auth fica sem confirmação (sem sessão)', true);
+    const sq = await signup(C);
+    check('cadastro', 'cadastro “solto” no Auth não bloqueia o CPF/CNPJ + usuário da loja de verdade', sq.ok || !!sj, JSON.stringify(sq.data).slice(0, 150));
+  }
+  const leftover = await sql(`select id from auth.users where email = $1`, [`${C.doc}.${C.user}@${STORE_DOMAIN}`]);
+  for (const u of leftover) cleanup.authIds.push(u.id);
   if (!A.loja || !B.loja) throw new Error('sem as lojas de teste, não dá para continuar');
 
   // ---------- logins ----------
@@ -249,7 +276,7 @@ try {
     const y = await rest('GET', t, 'select=*', { jwt: ANON });
     check('anon', `anon não lê ${t}`, denied(y) || (y.ok && y.data.length === 0), JSON.stringify(y.data).slice(0, 120));
   }
-  for (const f of ['sale_get', 'sale_create', 'self_login', 'minha_loja', 'report', 'app_status', 'users_list', 'current_loja_id', 'loja_liberada', 'admin_lojas', 'account_signup_loja', 'account_create', 'account_signup_check']) {
+  for (const f of ['sale_get', 'sale_create', 'self_login', 'minha_loja', 'report', 'app_status', 'users_list', 'current_loja_id', 'loja_liberada', 'admin_lojas', 'account_signup_loja', 'account_create', 'account_signup_check', 'account_user_create', 'account_user_password', 'account_admin_new_loja', 'account_admin_password', '_auth_create_user', '_auth_set_password']) {
     const y = await rpc(f, {}, ANON);
     check('anon', `anon não executa ${f}`, !y.ok && (y.status === 401 || y.status === 403 || y.status === 404 || y.data?.code === '42501'), `${y.status} ${JSON.stringify(y.data).slice(0, 120)}`);
   }
@@ -257,11 +284,10 @@ try {
   // ---------- super admin de teste ----------
   console.log('\n# Painel (super admin) e acesso de lojas ao administrador');
   const adminName = `qaadmin${RUN}`, adminPass = 'Adm-' + rnd(10);
-  const cu = await http('POST', '/auth/v1/admin/users', { jwt: SERVICE, headers: { apikey: SERVICE }, body: { email: `${adminName}@${ADMIN_DOMAIN}`, password: adminPass, email_confirm: true } });
-  if (!cu.ok) throw new Error('não criou admin de teste ' + JSON.stringify(cu.data));
-  adminUser = cu.data.id; cleanup.authIds.push(adminUser);
-  const ins = await restSvc('POST', 'super_admins', 'select=user_id', { user_id: adminUser, usuario: adminName });
-  check('admin', 'super admin de teste criado', ins.ok, JSON.stringify(ins.data));
+  adminUser = (await sql(`select _auth_create_user($1, $2, '{}'::jsonb) id`, [`${adminName}@${ADMIN_DOMAIN}`, adminPass]))[0].id;
+  cleanup.authIds.push(adminUser);
+  const ins = await sqlTry(`insert into super_admins(user_id, usuario) values ($1, $2)`, [adminUser, adminName]);
+  check('admin', 'super admin de teste criado', ins.ok, ins.error);
   const ADM = await login(`${adminName}@${ADMIN_DOMAIN}`, adminPass);
   x = await rpc('admin_lojas', {}, ADM);
   const la = x.ok && x.data.find((l) => l.id === A.loja);
@@ -280,12 +306,18 @@ try {
     const y2 = await fn({ action: 'admin_set_password', loja_id: B.loja, usuario: B.user, password: 'Senha-12345' }, jwt);
     check('admin', `${who} não troca senha de outra loja pelo painel`, !y2.ok && y2.data?.code === 'PROIBIDO', JSON.stringify(y2.data));
   }
+  for (const [who, jwt] of [['operador A', aop.jwt], ['dono A', a.jwt]]) {
+    const y = await rpc('_auth_create_user', { p_email: `z${RUN}@${ADMIN_DOMAIN}`, p_password: 'Senha-12345', p_meta: {} }, jwt);
+    check('admin', `${who} não cria login direto (_auth_create_user)`, !y.ok, JSON.stringify(y.data).slice(0, 120));
+    const y2 = await rpc('_auth_set_password', { p_uid: adminUser, p_password: 'Senha-12345' }, jwt);
+    check('admin', `${who} não troca senha direto (_auth_set_password)`, !y2.ok, JSON.stringify(y2.data).slice(0, 120));
+  }
   x = await rpc('minha_loja', {}, ADM);
   check('admin', 'super admin não é membro de nenhuma loja', !x.ok && x.data?.hint === 'SEM_LOJA', JSON.stringify(x.data));
   x = await rest('GET', 'sales', 'select=id', { jwt: ADM });
   check('admin', 'super admin não lê tabelas de venda pela API', x.ok && x.data.length === 0, JSON.stringify(x.data).slice(0, 100));
-  x = await restSvc('POST', 'loja_usuarios', 'select=user_id', { user_id: adminUser, loja_id: A.loja, usuario: 'adm' + RUN, papel: 'dono' });
-  check('admin', 'banco recusa colocar super admin dentro de uma loja', !x.ok, JSON.stringify(x.data).slice(0, 150));
+  x = await sqlTry(`insert into loja_usuarios(user_id, loja_id, usuario, papel) values ($1, $2, $3, 'dono')`, [adminUser, A.loja, 'adm' + RUN]);
+  check('admin', 'banco recusa colocar super admin dentro de uma loja', !x.ok, x.error);
 
   // ---------- bloqueio ----------
   console.log('\n# Bloqueio, vencimento, desbloqueio e pagamento');
@@ -326,19 +358,18 @@ try {
   console.log('\n# Limpeza');
   try {
     for (const d of cleanup.docs) {
-      const users = await restSvc('GET', 'loja_usuarios', `select=user_id,lojas!inner(documento)&lojas.documento=eq.${d}`);
-      for (const u of users.data ?? []) cleanup.authIds.push(u.user_id);
-      const del = await restSvc('DELETE', 'lojas', `documento=eq.${d}`);
-      check('limpeza', `loja de teste ${d.slice(0, 3)}… apagada`, del.ok && del.data.length === 1, JSON.stringify(del.data).slice(0, 100));
+      for (const u of await sql(`select lu.user_id from loja_usuarios lu join lojas l on l.id = lu.loja_id where l.documento = $1`, [d])) cleanup.authIds.push(u.user_id);
+      const del = await sql(`delete from lojas where documento = $1 returning id`, [d]);
+      check('limpeza', `loja de teste ${d.slice(0, 3)}… apagada`, del.length === 1, JSON.stringify(del));
     }
-    for (const id of [...new Set(cleanup.authIds)]) {
-      const del = await http('DELETE', `/auth/v1/admin/users/${id}`, { jwt: SERVICE, headers: { apikey: SERVICE } });
-      if (!del.ok) check('limpeza', `login ${id.slice(0, 8)} apagado`, false, JSON.stringify(del.data));
-    }
-    const left = await restSvc('GET', 'lojas', `select=id&nome=like.*${RUN}*`);
-    check('limpeza', 'nenhuma loja de teste sobrou', left.ok && left.data.length === 0, JSON.stringify(left.data));
-    const leftAdm = await restSvc('GET', 'super_admins', `select=usuario&usuario=like.qaadmin*`);
-    check('limpeza', 'nenhum super admin de teste sobrou', leftAdm.ok && leftAdm.data.length === 0, JSON.stringify(leftAdm.data));
+    const ids = [...new Set(cleanup.authIds)];
+    if (ids.length) await sql(`delete from auth.users where id = any($1::uuid[])`, [ids]);
+    const leftU = await sql(`select count(*)::int n from auth.users where id = any($1::uuid[])`, [ids]);
+    check('limpeza', 'logins de teste apagados', leftU[0].n === 0, JSON.stringify(leftU));
+    const left = await sql(`select id from lojas where nome like $1`, [`%${RUN}%`]);
+    check('limpeza', 'nenhuma loja de teste sobrou', left.length === 0, JSON.stringify(left));
+    const leftAdm = await sql(`select usuario from super_admins where usuario like 'qaadmin%'`);
+    check('limpeza', 'nenhum super admin de teste sobrou', leftAdm.length === 0, JSON.stringify(leftAdm));
   } catch (e) { check('limpeza', 'limpeza rodou', false, String(e)); }
   const by = {}; for (const r of results) { by[r.group] ??= { ok: 0, fail: 0 }; by[r.group][r.ok ? 'ok' : 'fail']++; }
   console.log('\nResumo:'); for (const [g, v] of Object.entries(by)) console.log(`  ${g.padEnd(12)} ${v.ok} ok${v.fail ? `, ${v.fail} FALHA(S)` : ''}`);
